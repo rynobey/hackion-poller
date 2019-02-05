@@ -1,5 +1,7 @@
 {
   "blockchainProxyAddress":"http://51.143.175.34:3000",
   "tokenProxyAddress":"http://51.143.175.34:5000",
-  "intervalDelay":10000
+  "intervalDelay":10000,
+  "blockchainNodeRpcAddress":"https://rinkeby.infura.io",
+  "blockchainNodeRpcAddress":""
 }
