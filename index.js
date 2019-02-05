@@ -12,7 +12,7 @@ async function getProofData(txHash){
   const cmd = `${pathToIonBinary}/ion-cli ${rpcAddress} ${txHash}`
   await exec(cmd, async function(err, stdout, stderr) {
     if(!!err) {
-      console.log(`Error while trying to get git log of ${name}: ${err}`)
+      console.log('Error while trying to exec ion-cli:', err)
     } else {
       const proof = stdout.substring(stdout.indexOf('0x'))
       console.log(proof)

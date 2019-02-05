@@ -3,5 +3,5 @@
   "tokenProxyAddress":"http://51.143.175.34:5000",
   "intervalDelay":10000,
   "blockchainNodeRpcAddress":"http://34.243.204.94:30001",
-  "absolutePathToIonCli":"/home/ryno/go/src/github.com/clearmatics/ion/ion-cli"
+  "absolutePathToIonCli":"$GOPATH/src/github.com/rynobey/ion/ion-cli"
 }
