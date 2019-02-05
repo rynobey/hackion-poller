@@ -1,0 +1,23 @@
+{
+  "name": "hackion-poller",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rynobey/hackion-poller.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rynobey/hackion-poller/issues"
+  },
+  "homepage": "https://github.com/rynobey/hackion-poller#readme",
+  "dependencies": {
+    "blockchain-proxy-client": "0.2.11",
+    "token-proxy-client": "^0.1.12"
+  }
+}
