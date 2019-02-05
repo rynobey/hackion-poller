@@ -8,7 +8,9 @@ const mintEventList = []
 async function processMintEvents(){
   const mintEvent = mintEventList.shift()
   if(!!mintEvent){
-    console.log({mintEvent})
+    const mintEventData = JSON.parse(mintEvent.data)
+    const txHash = mintEventData.contractEvent.transactionHash
+    console.log({txHash})
   }
 }
 
