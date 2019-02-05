@@ -27,7 +27,10 @@ module.exports = {
   tokenProxyAddress: setOverridableDefault(process.env.TOKEN_PROXY_ADDRESS, config.tokenProxyAddress),
   intervalDelay: setOverridableDefault(process.env.INTERVAL_DELAY, config.intervalDelay),
   blockchainNodeRpcAddress: setOverridableDefault(process.env.BLOCKCHAIN_NODE_RPC_ADDRESS, config.blockchainNodeRpcAddress),
-  absolutePathToIonCli: setOverridableDefault(process.env.ABSOLUTE_PATH_TO_ION_CLI, config.absolutePathToIonCli)
+  absolutePathToIonCli: setOverridableDefault(process.env.ABSOLUTE_PATH_TO_ION_CLI, config.absolutePathToIonCli),
+  validatorAddress: setOverridableDefault(process.env.VALIDATOR_ADDRESS, config.validatorAddress),
+  blockStoreAddress: setOverridableDefault(process.env.BLOCK_STORE_ADDRESS, config.blockStoreAddress),
+  chainId: setOverridableDefault(process.env.CHAIN_ID, config.chainId)
 }
 
 Object.defineProperty(module.exports, 'defaults', { value: config, enumerable: false })

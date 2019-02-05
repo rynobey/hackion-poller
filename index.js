@@ -1,10 +1,13 @@
 const exec = require('child_process').exec
+const Clique = artifacts.require("Clique");
 const config = require('./config')
 const util = require('./util.js')
 const blockchainProxy = require('blockchain-proxy-client')({apiServerAddress: config.blockchainProxyAddress})
 const tokenProxy = require('token-proxy-client')({apiServerAddress: config.tokenProxyAddress})
+const clique = await Clique.new(config.validatorAddress);
 
 const mintEventList = []
+const newBlockList = []
 
 async function getProofData(txHash){
   const rpcAddress = config.blockchainNodeRpcAddress
@@ -20,13 +23,26 @@ async function getProofData(txHash){
   })
 }
 
+async function processNewBlocks(){
+  const newBlock = newBlockList.shift()
+  if(!!newBlockEvent){
+    console.log(newBlock)
+  }
+}
+
 async function processMintEvents(){
   const mintEvent = mintEventList.shift()
   if(!!mintEvent){
     const mintEventData = JSON.parse(mintEvent.data)
     const txHash = mintEventData.contractEvent.transactionHash
-    getProofData(txHash)
+    await getProofData(txHash)
   }
+}
+
+async function processMintAndNewBlockEventsPeriodically() {
+  await processNewBlocks()
+  await processMintEvents()
+  setTimeout(processMintAndNewBlockEventsPeriodically, 100)
 }
 
 async function run(){
@@ -46,10 +62,11 @@ async function run(){
       mintEventList.push(event)
     })
 
-    while(true){
-      await processMintEvents()
-      await util.delay(100)
-    }
+    blockchainProxy.subscribeToBlockNumbersPubSub(function(event) {
+      newBlockList.push(event)
+    })
+
+    processMintAndNewBlockEventsPeriodically()
     
   } catch (err){
     console.log('ERROR in index.js->run():', err)
