@@ -7,6 +7,7 @@ const tokenProxy = require('token-proxy-client')({apiServerAddress: config.token
 const mintEventList = []
 
 async function getProofData(txHash){
+  await util.delay(1000)
   const rpcAddress = config.blockchainNodeRpcAddress
   const pathToIonBinary = config.absolutePathToIonCli
   const cmd = `${pathToIonBinary}/ion-cli ${rpcAddress} ${txHash}`
@@ -48,7 +49,7 @@ async function run(){
 
     while(true){
       await processMintEvents()
-      await util.delay(100)
+      await util.delay(1000)
     }
     
   } catch (err){
