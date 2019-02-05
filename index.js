@@ -31,12 +31,13 @@ async function processMintEvents(){
 
 async function run(){
   try{
+    const blockNumber = (await blockchainProxy.getBlockNumber()).blockNumber
     const tokenContractAddress = (await tokenProxy.contractAddress()).contractAddress
     const tokenContractABI = (await tokenProxy.getTokenContractABI()).abi
     const mintEventPrototype = (await tokenProxy.getMintEventPrototype()).prototype
     const filterOptions = JSON.stringify({
       filter: {},
-      fromBlock: 0,
+      fromBlock: blockNumber,
       topics: [mintEventPrototype]
     })
 
