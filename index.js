@@ -10,6 +10,7 @@ const mintEventList = []
 const newBlockList = []
 
 async function getProofData(txHash){
+  await util.delay(1000)
   const rpcAddress = config.blockchainNodeRpcAddress
   const pathToIonBinary = config.absolutePathToIonCli
   const cmd = `${pathToIonBinary}/ion-cli ${rpcAddress} ${txHash}`
@@ -67,7 +68,7 @@ async function run(){
     })
 
     processMintAndNewBlockEventsPeriodically()
-    
+  
   } catch (err){
     console.log('ERROR in index.js->run():', err)
     process.exit(1)

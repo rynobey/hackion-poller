@@ -2,7 +2,7 @@
   "blockchainProxyAddress":"http://51.143.175.34:3000",
   "tokenProxyAddress":"http://51.143.175.34:5000",
   "intervalDelay":10000,
-  "blockchainNodeRpcAddress":"http://34.243.204.94:30001",
+  "blockchainNodeRpcAddress":"https://rinkeby.infura.io",
   "absolutePathToIonCli":"$GOPATH/src/github.com/rynobey/ion/ion-cli",
   "blockStoreAddress":"0xe812064CCA52B42F6C1D5345Bc40fb0683eAfF15",
   "validatorAddress":"0x07a435c7b9df1F331505DdC05165473BEBeAFCdB",
