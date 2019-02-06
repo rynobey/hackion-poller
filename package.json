@@ -18,6 +18,8 @@
   "homepage": "https://github.com/rynobey/hackion-poller#readme",
   "dependencies": {
     "blockchain-proxy-client": "0.2.11",
-    "token-proxy-client": "0.1.12"
+    "token-proxy-client": "0.1.12",
+    "web3": "1.0.0-beta.34",
+    "web3-utils": "^1.0.0-beta.41"
   }
 }

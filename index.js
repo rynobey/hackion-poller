@@ -1,16 +1,29 @@
 const exec = require('child_process').exec
-const Clique = artifacts.require("Clique");
+const fs = require("fs")
 const config = require('./config')
 const util = require('./util.js')
 const blockchainProxy = require('blockchain-proxy-client')({apiServerAddress: config.blockchainProxyAddress})
 const tokenProxy = require('token-proxy-client')({apiServerAddress: config.tokenProxyAddress})
-const clique = await Clique.new(config.validatorAddress);
 
+let clique
 const mintEventList = []
 const newBlockList = []
 
+function setLastSubmittedBlock(block) {
+  console.log({block})
+  const obj = {
+    blockNumber: 0
+  }
+  fs.writeFileSync(config.lastBlockStoreFile, JSON.stringify(obj))
+}
+
+function getLastSubmittedBlock() {
+  const data = JSON.parse(fs.readFileSync(config.lastBlockStoreFile))
+  console.log(data)
+  return data
+}
+
 async function getProofData(txHash){
-  await util.delay(1000)
   const rpcAddress = config.blockchainNodeRpcAddress
   const pathToIonBinary = config.absolutePathToIonCli
   const cmd = `${pathToIonBinary}/ion-cli ${rpcAddress} ${txHash}`
@@ -25,9 +38,9 @@ async function getProofData(txHash){
 }
 
 async function processNewBlocks(){
-  const newBlock = newBlockList.shift()
+  const newBlockEvent = newBlockList.shift()
   if(!!newBlockEvent){
-    console.log(newBlock)
+    console.log(newBlockEvent)
   }
 }
 
@@ -48,6 +61,7 @@ async function processMintAndNewBlockEventsPeriodically() {
 
 async function run(){
   try{
+    //clique = await Clique.new(config.validatorAddress);
     const blockNumber = (await blockchainProxy.getBlockNumber()).blockNumber
     const tokenContractAddress = (await tokenProxy.contractAddress()).contractAddress
     const tokenContractABI = (await tokenProxy.getTokenContractABI()).abi
@@ -68,7 +82,10 @@ async function run(){
     })
 
     processMintAndNewBlockEventsPeriodically()
-  
+
+    setLastSubmittedBlock({})
+    getLastSubmittedBlock()
+    
   } catch (err){
     console.log('ERROR in index.js->run():', err)
     process.exit(1)

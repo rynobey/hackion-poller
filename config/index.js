@@ -30,7 +30,8 @@ module.exports = {
   absolutePathToIonCli: setOverridableDefault(process.env.ABSOLUTE_PATH_TO_ION_CLI, config.absolutePathToIonCli),
   validatorAddress: setOverridableDefault(process.env.VALIDATOR_ADDRESS, config.validatorAddress),
   blockStoreAddress: setOverridableDefault(process.env.BLOCK_STORE_ADDRESS, config.blockStoreAddress),
-  chainId: setOverridableDefault(process.env.CHAIN_ID, config.chainId)
+  chainId: setOverridableDefault(process.env.CHAIN_ID, config.chainId),
+  lastBlockStoreFile: setOverridableDefault(process.env.LAST_BLOCK_STORE_FILE, config.lastBlockStoreFile)
 }
 
 Object.defineProperty(module.exports, 'defaults', { value: config, enumerable: false })

@@ -74,9 +74,9 @@ encoder.extractValidators = (extraData) => {
 
   // Remove dressin, 32 bytes pre validators, 65 bytes post validators, and extra byte for 0x
   extraDataValidators = genesisExtraData.splice(33, genesisExtraData.length-32-65-1)
-
+console.log({extraDataValidators})
   // Check that the validators length is factor of 20 
-  assert.equal(extraDataValidators.length%20, 0);
+  //assert.equal(extraDataValidators.length%20, 0);
   numValidators = extraDataValidators.length / 20;
 
   let validators = [];

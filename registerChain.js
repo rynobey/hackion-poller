@@ -11,36 +11,50 @@ const blockchainProxy = require('blockchain-proxy-client')({apiServerAddress: co
 let VALIDATORS
 let GENESIS_HASH
 
-function getSetupBlockData() {
-  const currentBlockNumber = rinkeby.eth.blockNumber()
+const VALIDATORS_B2657422 = [
+    "0x42eb768f2244c8811c63729a21a3569731535f06",
+    "0x6635f83421bf059cd8111f180f0727128685bae4",
+    "0x7ffc57839b00206d1ad20c69a1981b489f772031",
+    "0xb279182d99e65703f0076e4812653aab85fca0f0",
+    "0xd6ae8250b8348c94847280928c79fb3b63ca453e",
+    "0xda35dee8eddeaa556e4c26268463e26fb91ff74f",
+    "0xfc18cbc391de84dbd87db83b20935d3e89f5dd91"]
+
+async function getSetupBlockData() {
+  const currentBlockNumber = 2657422
+  //const currentBlockNumber = await rinkeby.eth.getBlockNumber()
   const genesisBlock = await rinkeby.eth.getBlock(currentBlockNumber);
-  VALIDATORS = encoder.extractValidators(genesisBlock.extraData);
+  //VALIDATORS = await encoder.extractValidators(genesisBlock.extraData);
   GENESIS_HASH = genesisBlock.hash;
-  console.log(VALIDATORS)
+  console.log({VALIDATORS_B2657422})
   console.log(GENESIS_HASH)
 }
 
-function run() {
-  getSetupBlockData()
+async function run() {
+  const accounts = (await blockchainProxy.accounts()).accounts
+  await getSetupBlockData()
   //const registerTxData = clique.methods.register().encodeABI()
   //const registerTx = {
+  //  from: accounts[0],
   //  to: config.validatorAddress,
   //  value: '0x0',
   //  gas: '0x'+Number(100000).toString(16),
   //  gasPrice: '0x0',
   //  data: registerTxData
   //}
-  //await blockchainProxyClient.sendTransaction(registerTx)
-  //const registerTxData = clique.methods.registerChain(config.chainId, ).encodeABI()
-  //const registerTx = {
-  //  to: config.validatorAddress,
-  //  value: '0x0',
-  //  gas: '0x'+Number(100000).toString(16),
-  //  gasPrice: '0x0',
-  //  data: registerTxData
-  //}
-  //await blockchainProxyClient.sendTransaction(registerTx)
-  //await clique.RegisterChain(TESTCHAINID, VALIDATORS_B2657422, TRIG_GENESIS_HASH, storage.address);
+  //const registerTxHash = await blockchainProxy.sendTransaction(registerTx)
+  //console.log({registerTxHash})
+  const registerChainTxData = clique.methods.RegisterChain(config.chainId, VALIDATORS_B2657422, GENESIS_HASH, config.blockStoreAddress).encodeABI()
+  const registerChainTx = {
+    from: accounts[0],
+    to: config.validatorAddress,
+    value: '0x0',
+    gas: '0x'+Number(800000).toString(16),
+    gasPrice: '0x0',
+    data: registerChainTxData
+  }
+  const registerChainTxHash = await blockchainProxy.sendTransaction(registerChainTx)
+  console.log({registerChainTxHash})
 
   //// Fetch block 2657422 from rinkeby
   //const block = await rinkeby.eth.getBlock(TESTBLOCK.number);
