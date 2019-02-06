@@ -23,8 +23,10 @@ function setOverridableDefault(overrider, defaultValue){
 }
 
 module.exports = {
-  blockchainProxyAddress: setOverridableDefault(process.env.BLOCKCHAIN_PROXY_ADDRESS, config.blockchainProxyAddress),
-  tokenProxyAddress: setOverridableDefault(process.env.TOKEN_PROXY_ADDRESS, config.tokenProxyAddress),
+  blockchainProxyAddress1: setOverridableDefault(process.env.BLOCKCHAIN_PROXY_ADDRESS1, config.blockchainProxyAddress1),
+  tokenProxyAddress1: setOverridableDefault(process.env.TOKEN_PROXY_ADDRESS1, config.tokenProxyAddress1),
+  blockchainProxyAddress2: setOverridableDefault(process.env.BLOCKCHAIN_PROXY_ADDRESS2, config.blockchainProxyAddress2),
+  tokenProxyAddress2: setOverridableDefault(process.env.TOKEN_PROXY_ADDRESS2, config.tokenProxyAddress2),
   intervalDelay: setOverridableDefault(process.env.INTERVAL_DELAY, config.intervalDelay),
   blockchainNodeRpcAddress: setOverridableDefault(process.env.BLOCKCHAIN_NODE_RPC_ADDRESS, config.blockchainNodeRpcAddress),
   absolutePathToIonCli: setOverridableDefault(process.env.ABSOLUTE_PATH_TO_ION_CLI, config.absolutePathToIonCli),

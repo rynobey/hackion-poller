@@ -1,6 +1,8 @@
 {
-  "blockchainProxyAddress":"http://51.143.175.34:3000",
-  "tokenProxyAddress":"http://51.143.175.34:5000",
+  "blockchainProxyAddress1":"http://51.143.175.34:3000",
+  "tokenProxyAddress1":"http://51.143.175.34:5000",
+  "blockchainProxyAddress2":"http://51.141.225.102:3000",
+  "tokenProxyAddress2":"http://51.141.225.102:5000",
   "intervalDelay":10000,
   "blockchainNodeRpcAddress":"https://rinkeby.infura.io",
   "absolutePathToIonCli":"$GOPATH/src/github.com/rynobey/ion/ion-cli",

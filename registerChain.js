@@ -6,7 +6,7 @@ const rinkeby = new Web3();
 rinkeby.setProvider(new web3.providers.HttpProvider(config.blockchainNodeRpcAddress));
 const Clique = require("./build/contracts/Clique.json")
 const clique = new web3.eth.Contract(Clique.abi)
-const blockchainProxy = require('blockchain-proxy-client')({apiServerAddress: config.blockchainProxyAddress})
+const blockchainProxy2 = require('blockchain-proxy-client')({apiServerAddress: config.blockchainProxyAddress2})
 
 let VALIDATORS
 let GENESIS_HASH
@@ -31,7 +31,7 @@ async function getSetupBlockData() {
 }
 
 async function run() {
-  const accounts = (await blockchainProxy.accounts()).accounts
+  const accounts = (await blockchainProxy2.accounts()).accounts
   await getSetupBlockData()
   //const registerTxData = clique.methods.register().encodeABI()
   //const registerTx = {
@@ -53,7 +53,7 @@ async function run() {
     gasPrice: '0x0',
     data: registerChainTxData
   }
-  const registerChainTxHash = await blockchainProxy.sendTransaction(registerChainTx)
+  const registerChainTxHash = await blockchainProxy2.sendTransaction(registerChainTx)
   console.log({registerChainTxHash})
 
   //// Fetch block 2657422 from rinkeby
