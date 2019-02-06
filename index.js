@@ -12,6 +12,7 @@ const Clique = require("./build/contracts/Clique.json")
 const clique = new web3.eth.Contract(Clique.abi)
 
 let submittingSkippedBlocks = false
+let processingSkippedMintEvents = false
 const mintEventList = []
 const newBlockList = []
 
@@ -114,17 +115,36 @@ async function processNewBlocks(){
   }
 }
 
+async function processSkippedMintEvents() {
+  processingSkippedMintEvents = true
+  while (mintEventList.length > 0) {
+    const mintEvent = mintEventList.shift()
+    if(!!mintEvent){
+      const mintEventData = JSON.parse(mintEvent.data)
+      const txHash = mintEventData.contractEvent.transactionHash
+      // submit verifyAndTransfer tx here
+      await getProofData(txHash)
+    }
+  }
+  processingSkippedMintEvents = false
+}
+
 async function processMintEvents(){
-  const mintEvent = mintEventList.shift()
-  if(!!mintEvent){
-    const mintEventData = JSON.parse(mintEvent.data)
-    const txHash = mintEventData.contractEvent.transactionHash
-    await getProofData(txHash)
+  if (mintEventList.length > 1) {
+    processSkippedMintEvents()
+  } else {
+    const mintEvent = mintEventList.shift()
+    if(!!mintEvent){
+      const mintEventData = JSON.parse(mintEvent.data)
+      const txHash = mintEventData.contractEvent.transactionHash
+      // submit verifyAndTransfer tx here
+      await getProofData(txHash)
+    }
   }
 }
 
 async function processMintAndNewBlockEventsPeriodically() {
-  if (!submittingSkippedBlocks) {
+  if (!submittingSkippedBlocks && !processingSkippedMintEvents) {
     await processNewBlocks()
     await processMintEvents()
   }
