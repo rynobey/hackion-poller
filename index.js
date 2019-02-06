@@ -153,7 +153,6 @@ async function processMintAndNewBlockEventsPeriodically() {
 
 async function run(){
   try{
-    //clique = await Clique.new(config.validatorAddress);
     const blockNumber = (await blockchainProxy1.getBlockNumber()).blockNumber
     const tokenContractAddress = (await tokenProxy1.contractAddress()).contractAddress
     const tokenContractABI = (await tokenProxy1.getTokenContractABI()).abi
